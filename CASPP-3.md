@@ -35,13 +35,14 @@
 8.  简单的数据传送指令    
 
     |指令|效果|描述|
-    |MOV S, D|D &larr S|传送| 
+    |-|-|-|
+    |MOV S, D|D &larr; S|传送| 
     |-|-|-|
     |movb||传送字节|
     |movw||传送字|
     |movl||传送双字|
     |movq||传送四字|
-    |movabsq I, R|R &larr I|传送绝对的四字|
+    |movabsq I, R|R &larr; I|传送绝对的四字|
 
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
