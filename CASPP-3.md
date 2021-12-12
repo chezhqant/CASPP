@@ -103,7 +103,30 @@
     |unsigned|unsigned char|movl (%rdi), %eax<br>movb (%al), (%rsi)|
     |char|short|movsbw (%rdi), %ax<br>movw %ax, (%rsi)|
 
-13.  `push` 和 `pop` 参考另一个《汇编原理》       
+13. `push` 和 `pop` 参考另一个《汇编原理》       
+14. 算术和逻辑操作分为四种：   
+    + 加载有效地址      
+    + 一元操作    
+    + 二元操作    
+    + 移位      
+    |指令|效果|描述|
+    |-|-|-|
+    |leaq S, D|D &larr; &S|加载有效地址|
+    |INC D|D &larr; D + 1|加1|
+    |DEC D|D &larr; D - 1|减1|
+    |NEG D|D &larr; -D|取负|
+    |NOT D|D &larr; ~D|取补|
+    |ADD S, D|D &larr; D + S|加|
+    |SUB S, D|D &larr; D - S|减|
+    |IMUL S, D|D &larr; D * S|乘|
+    |XOR S, D|D &larr; D ^ S|异或|
+    |OR S, D|D &larr; D | S|或|
+    |AND S, D|D &larr; D & S|与|
+    |SAL k, D|D &larr; D << k|算术左移|
+    |SHL k, D|D &larr; D << k|逻辑左移|
+    |SAR k, D|D &larr; D >> k|算术右移|
+    |SHR k, D|D &larr; D >> k|逻辑有移|
+
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
     2.  形式多样：函数，方法，子例程，处理函数等等      
