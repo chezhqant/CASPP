@@ -103,6 +103,7 @@
     |unsigned|unsigned char|movl (%rdi), %eax<br>movb (%al), (%rsi)|
     |char|short|movsbw (%rdi), %ax<br>movw %ax, (%rsi)|
 
+13.  `push` 和 `pop` 参考另一个《汇编原理》       
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
     2.  形式多样：函数，方法，子例程，处理函数等等      
