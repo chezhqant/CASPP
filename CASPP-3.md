@@ -121,8 +121,8 @@
     |SUB S, D|D &larr; D - S|减|
     |IMUL S, D|D &larr; D * S|乘|
     |XOR S, D|D &larr; D ^ S|异或|
-
     |OR S, D|D &larr; D \| S|或|
+
     |AND S, D|D &larr; D & S|与|
     |SAL k, D|D &larr; D << k|算术左移|
     |SHL k, D|D &larr; D << k|逻辑左移|
