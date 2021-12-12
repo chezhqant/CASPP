@@ -75,6 +75,27 @@
     |movslq||将做了符号扩展的双字传送到四字|
     |cltq|%rax &larr; 符号扩展(%eax)|把%eax符号扩展到%rax|
 
+11. 练习题3-3     
+    ```
+    movb $0xF, (%ebx)               can not use %ebx as address register
+    movl %rax, (%rsp)               mismatch between instruction suffix and register ID
+    movw (%rax), 4(%rsp)            can not have both source and destination be memory references
+    movb %al, %sl                   no register named %sl
+    movq %rax, $0x123               can not have immedinate as distination
+    movl %eax, %rdx                 destination operand incorrect size
+    movb %si, 8(%rbp)               mismatch between instruction suffix and register ID
+    ```
+12. 练习题3-4，假设：     
+    ```
+    src_t *sp;
+    dest_t *dp;
+    ```
+    要实现 `*dp = (dest_t)*sp;`以下变换：     
+    |src_t|dest_t|指令|
+    |-|-|-|
+    |long|long|movq (%rdi), %rax<br>movq %rax, (%rsi)|
+    |char|int|movb (%rdi), %al<br>movb %al, (%rsi)|
+
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
     2.  形式多样：函数，方法，子例程，处理函数等等      
