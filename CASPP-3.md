@@ -119,15 +119,18 @@
     |NOT D|D &larr; ~D|取补|
     |ADD S, D|D &larr; D + S|加|
     |SUB S, D|D &larr; D - S|减|
-    |IMUL S, D|D &larr; D * S|乘|
-    |XOR S, D|D &larr; D ^ S|异或|
+    |IMUL S, D|D &larr; D * S|乘|     
+    |XOR S, D|D &larr; D ^ S|异或|      
     |OR S, D|D &larr; D \| S|或|
     |AND S, D|D &larr; D & S|与|
     |SAL k, D|D &larr; D << k|算术左移|
-    |SHL k, D|D &larr; D << k|逻辑左移|
+    |SHL k, D|D &larr; D << k|逻辑左移，等同于 SAL|
     |SAR k, D|D &larr; D >> k|算术右移|
     |SHR k, D|D &larr; D >> k|逻辑有移|
 
+15. leaq(load effective address)：      
+    + 从内存读数据到寄存器，但实际上它根本就没有引用内存。它的第一个操作书看上去时一个内存引用，但是该指令并不是从指定的位置读入数据，二十将有效地址写入到目的操作数     
+    + 如果寄存器 `%rax` 的值位x，那么指令 `leaq 7(%rdx, %rdx, 4), %rax` 将设置寄存器 `%rax` 的值位 `5x + 7`。这种情况下目的操作数必须是一个寄存器     
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
     2.  形式多样：函数，方法，子例程，处理函数等等      
