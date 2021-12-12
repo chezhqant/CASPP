@@ -91,10 +91,17 @@
     dest_t *dp;
     ```
     要实现 `*dp = (dest_t)*sp;`以下变换：     
+    ___当执行强制类型转换既设计大小变换又设计 C语言 中符号变化时，操作应该先改变大小___     
+
     |src_t|dest_t|指令|
     |-|-|-|
     |long|long|movq (%rdi), %rax<br>movq %rax, (%rsi)|
-    |char|int|movb (%rdi), %al<br>movb %al, (%rsi)|
+    |char|int|movsbl (%rdi), %eax<br>movl %eax, (%rsi)|
+    |char|unsigned|movsbl (%rdi), %eax<br>movl %eax, (%rsi)|
+    |unsigned char|long|movzbl %(rdi), %eax<br>movq %rax, (%rsi)|
+    |int|char|movl (%rdi), %eax<br>movb %al, (%rsi)|
+    |unsigned|unsigned char|movl (%rdi), %eax<br>movb (%al), (%rsi)|
+    |char|short|movsbw (%rdi), %ax<br>movw %ax, (%rsi)|
 
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
