@@ -136,6 +136,7 @@
     + 移位操作的目的操作数可以是寄存器或者是内存位置      
 17. 两个 64 位有符号或者无符号整数相等得到的乘积需要128位表示     
     |指令|效果|描述|
+    |-|-|-|
     |imulq S<br>mulq S|R[%rax]: R[%rax] &larr; S X R[%rax]<br>R[%rax]: R[%rax] &larr; S X R[%rax]|有符号乘法<br>无符号乘法|
     |clto|R[%rax]: R[%rax] &larr; 符号扩展(R[%rax])|转换八字|
     |idivq S|R[%rdx] &larr; R[%rdx]: R[%rax] mod S<br>R[%rdx] &larr; R[%rdx]: R[%rax] / S|有符号除法|
