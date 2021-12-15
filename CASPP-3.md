@@ -182,6 +182,26 @@
     |testl||测试双字|
     |testq||测试四字|
 
+20. 条件码不会直接读取，常用的使用方法有三种：    
+    + 根据条件码的某种组合，将 __一个字节__ 设置成0或者1，将这类指令成为 `SET` 指令       
+    + 可以条件跳转到程序的某个其他部分      
+    + 可以有条件的传送数据      
+21. `SET` 指令的目的操作数是低位字节寄存器元素之一，或者是一个字节的内存位置，指令会将这个字节设置成0或者1.为了得到一个32位或者64位的结果。必须对高位清零。     
+    |指令|同义名|效果|设置条件|
+    |-|-|-|-|
+    |sete D|setz|D &larr; ZF|相等/零|
+    |setne D|setnz|D &larr; ~ZF|不相等/非零|
+    |sets D||D &larr; SF|负数|
+    |setns D||D &larr; ~SF|非负数|
+    |setg D|setnle|D &larr; ~(SF^OF)&~ZF|大于（有符号>）|
+    |setge D|setnl|D &larr; ~(SF^OF)|大于等于（有符号>=）|
+    |setl D|setnge|D &larr; SF^OF|小于（有符号<）|
+    |setle D|setng|D &larr; (SF^OF) + ZF|小于等于（有符号<=）|
+    |seta D|setnbe|D &larr; ~CF & ~ZF|超过（无符号>）|
+    |setae D|setnb|D &larr; ~CF|超过或者相等（无符号>=）|
+    |setb|setnae|D &larr; CF|低于（无符号<）|
+    |setbe|setna|D &larr; CF \| ZF|低于或者相等（无符号<=）|
+
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
     2.  形式多样：函数，方法，子例程，处理函数等等      
