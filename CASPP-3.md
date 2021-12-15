@@ -207,6 +207,7 @@
     + 简介跳转，跳转目标是从寄存器或者内存位置读出的，简介跳转的写法是 _*_  后面跟一个操作数指示符：      
       + `jmp *%rax`，用寄存器中的值作为跳转目标     
       + `jmp *(%rax)`，以 `%rax` 中的值作为读地址，从内存中读出跳转目标            
+
     |指令|同义名|跳转条件|描述|
     |-|-|-|-|
     |jmp Label||1|直接跳转|
@@ -215,11 +216,11 @@
     |jne Label|jnz|~ZF|不相等/非零|
     |js Label||SF|负数|
     |jns Label||~SF|非负数|
-    |jg Label|jnle|~(SF^OF)&~ZF|大于（有符号>）|
+    |jg Label|jnle|~(SF^OF) & ~ZF|大于（有符号>）|
     |jge Label|jnl|~(SF^OF)|大于或者等于（有符号>=）|
     |jl Label|jnge|SF^OF|大小（有符号<）|
     |jle|jng|(SF^OF) \| ZF|小于或者等于（有符号<=）|
-    |ja Label|jnbe|~CF&~ZF|超过（无符号>）|
+    |ja Label|jnbe|~CF & ~ZF|超过（无符号>）|
     |jae Label|jnb|~CF|超过或者相等（无符号>=）|
     |jb Label|jnae|CF|低于（无符号<）|
     |jbe Label|jna|CF \| ZF|低于或者相等（无符号<=）|
