@@ -226,6 +226,61 @@
     |jbe Label|jna|CF \| ZF|低于或者相等（无符号<=）|
 
 23. 跳转指令最常用的编码方式是PC相对的。它们会将目标指令的地址与紧跟在跳转指令后面那条指令的地址之间的差作为编码。这些地址偏移量可以编码为 __1，2或者4__ 个字节。第二种编码方法是给出“绝对地址”，用4个字节直接指定目标，汇编器和连接器狐疑选择适当的跳转目标编码。   
+24. if-else       
+    + 形式一      
+      ```
+      if (test-expr)
+        then-statement
+      else
+        else-statement
+      ```
+    + 形式二，这种是通用的形式      
+      ```
+      t =test-expr
+      if (!t)
+        goto false;
+
+      then-statement
+      goto done;
+
+      false:
+        else-statement
+      done:
+      ```
+    + 形式三        
+      ```
+      t = test-expr
+      if (t)
+        then-statement
+      goto done;
+
+      false:
+        else-statement
+
+      done:
+      ```
+    + 形式四，使用替换的策略是使用数据的跳转转移。这种方法是计算一个条件操作的两个结果，然后再根据条件是否满足从中选取一个。只有在一些受限制的情况中，这种策略才可行。但是如果可行的话，就可以用一条简单的条件传送指令来实现它，条件传送指令更符合现代处理器的性能特性。      
+      ```
+      v = then-expr
+      ve = else-expr
+      t = test-expr
+      if (!t) v = ve
+      ```
+      |指令|同义名|传送条件|描述|
+      |-|-|-|-|
+      |comve S, R|cmovz|ZF|相等/零|
+      |cmovne S, R|cmovnz|~ZF|不相等/非零|
+      |cmovs S, R||SF|负数|
+      |cmovns S, R||~SF|非负数|
+      |cmovg S, R|cmovnle|~(SF^OF)&~ZF|大于（有符号>）|
+      |cmovge S, R|cmovnl|~(SF^OF)|大于或者等于（有符号>=）|
+      |cmovl S, R|comvnge|SF^OF|小于（有符号<）|
+      |cmovle S, R|cmovng|(SF^OF) \| ZF|小于或者等于（有符号<=）|
+      |cmova S, R|cmovnbe|~CF & ~ZF|超过（无符号>)|
+      |cmovae S, R|cmovnb|~CF|超过或者相等（无符号>=）|
+      |cmovb S, R|cmovnae|CF|低于（无符号<）|
+      |cmovbe S, R|cmovna|CF \| ZF|低于或者等于（无符号<=）|
+
 1.  过程(过程 P 调用过程 Q)      
     1.  一种抽象方式      
     2.  形式多样：函数，方法，子例程，处理函数等等      
