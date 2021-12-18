@@ -409,4 +409,10 @@
     |\*(E+i-3)|int|M[x<sub>E</sub>+4i-12]|movl-12(%rdx, %rcx, 4), %eax|
     |&E[i]-E|long|i|movq %rcx, %rax|
 
-42. 
+42. 要访问多为数组的元素，编译器会以数组起始为基地址，偏移量为索引，产生计算期望的元素的偏移量，然后使用某种 `MOV` 指令。通常 `T D[R][C]` ，它的数组元素 `D[i][j]` 的内存地址为 `&D[i][j]=x<sub>D</sub>+L(C*i+j)` L是数据类型T以字节为单位的大小。假设x<sub>A</sub>，i和j分别在寄存器%rdi，%rsi和%rdx中。然后使用下面代码将数组元素 A[i][j] 复制到寄存器%eax中：      
+    ```
+    A in %rdi, i in %rsi, and j in %rdx
+    leaq (%rsi, %rsi, 2), %rax  Compute 3*i
+    leaq (%rdi, %rax, 4), %rax  Compute x<sub>A</sub>+12*i
+    movl (%rax, %rdx, 4), %eax  Read from M[x<sub>A</sub>+12*i+4*j]
+    ```
