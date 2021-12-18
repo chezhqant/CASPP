@@ -400,13 +400,14 @@
     + 假设E是一个int型的数组，E的地址存放到寄存器%rdx中，而i存放到寄存器%rcx中。然后执行`movl (%rdx, %rcx, 4)， %eax` 会执行地址计算x<sub>E</sub>+4*i的计算，读这个内存位置的值，将结果存放到寄存器%rax中      
 41. 假设整形数组E的起始地址和整数索引i分别存放在寄存器%rdx和%rcx中。下面每个变大时的汇编代码实现，结果存放在寄存器%eax或者寄存器%rax中：      
     |表达式|类型|值|汇编代码|
+    |-|-|-|-|
+    |E|int\*|x<sub>E</sub>|mov %rdx, %rax|
 
-    <!-- |E|int\*|x<sub>E</sub>|mov %rdx, %rax|
-       - |E[0]|int|M[x<sub>E</sub>]|movl (%rdx), %rax|
+    <!-- |E[0]|int|M[x<sub>E</sub>]|movl (%rdx), %rax|
        - |E[i]|int|M[x<sub>E</sub>+4i]|movl (%rdx, %rcax, 4), %eax|
        - |&E[2]|int\*|x<sub>E</sub>+8|leaq 8(%rdx), %rax|
        - |E+i-1|int\*|x<sub>E</sub>+4i-4|leaq-4(%rdx, %rcx, 4), %rax|
        - |\*(E+i-3)|int|M[x<sub>E</sub>+4i-12]|movl-12(%rdx, %rcx, 4), %eax|
-       - |&E[i]-E|long|i|movq %rcx, %rax|  -->
+       - |&E[i]-E|long|i|movq %rcx, %rax|   -->
 
 42. 
