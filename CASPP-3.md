@@ -405,9 +405,8 @@
     |E[0]|int|M[x<sub>E</sub>]|movl (%rdx), %rax|
     |E[i]|int|M[x<sub>E</sub>+4i]|movl (%rdx, %rcax, 4), %eax|
     |&E[2]|int\*|x<sub>E</sub>+8|leaq 8(%rdx), %rax|
-
-    <!-- |E+i-1|int\*|x<sub>E</sub>+4i-4|leaq-4(%rdx, %rcx, 4), %rax|
-       - |\*(E+i-3)|int|M[x<sub>E</sub>+4i-12]|movl-12(%rdx, %rcx, 4), %eax|
-       - |&E[i]-E|long|i|movq %rcx, %rax|    -->
+    |E+i-1|int\*|x<sub>E</sub>+4i-4|leaq-4(%rdx, %rcx, 4), %rax|
+    |\*(E+i-3)|int|M[x<sub>E</sub>+4i-12]|movl-12(%rdx, %rcx, 4), %eax|
+    |&E[i]-E|long|i|movq %rcx, %rax|
 
 42. 
