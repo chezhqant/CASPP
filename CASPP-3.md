@@ -489,6 +489,6 @@
     |vdivss|vdivsd|D &larr; S<sub>2</sub>\/S<sub>1</sub>|浮点数除|
     |vmaxss|vmaxsd|D &larr; max(S<sub>2</sub>, S<sub>1</sub>)|浮点数最大值|
     |vminss|vminsd|D &larr; min(S<sub>2</sub>, S<sub>1</sub>)|浮点数最小值|
-    |sqrtss|sqrtsd|D &larr; \sqrt[2]{S<sub>1</sub>}|浮点数最小值|
+    |sqrtss|sqrtsd|D &larr; $\sqrt[2]{S<sub>1</sub>}$|浮点数最小值|
 
 56. 
