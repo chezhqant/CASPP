@@ -459,4 +459,20 @@
     |vcvtsi2ssq|M<sub>64</sub>/R<sub>64</sub>|X|X|把四字整数转换为单精度数|
     |vcvtsi2sdq|M<sub>64</sub>/R<sub>64</sub>|X|X|把四字整数转换为双精度数|
 
-53.
+53. 要在两种不同的浮点格式之间转换，GCC的当前版本生成的代码需要单独说明，假设%xmm0的低位4字节保存一个单精度值一般很容易想到：     
+    ```
+    vcvtss2sd %xmm0, %xmm0, %xmm0
+    ```
+    把它转换成一个双精度值，并将结果存储在寄存器%xmm0的低8字节。不过GCC生成的代码如下：     
+    ```
+    Conversion from single to double precision
+    vunpcklps %xmm0, %xmm0, %xmm0         Replicate first vector element
+    vcvtps2pd %xmm0, %xmm0                Convert two vector elements to double
+    ```
+    vunpcklps 指令通常用来放置来自两个XMM寄存器的值，把它们存储到第三个寄存器中。如果一个寄存器的内容为字[s<sub>3</sub>,s<sub>2</sub>, s<sub>1</sub>, s<sub>0</sub>]，另一个源寄存器为字[d<sub>3</sub>,d<sub>2</sub>, d<sub>1</sub>, d<sub>0</sub>]。那么目的寄存器的值会是[s<sub>1</sub>,d<sub>1</sub>, s<sub>0</sub>, d<sub>0</sub>]。上卖弄上面代码中，我们看到三个操作数使用同一个寄存器，所以如果原始寄存器的值为[x<sub>3</sub>, x<sub>2</sub>, x<sub>1</sub>, x<sub>0</sub>]，那么该指令会将寄存器的值更新为值[x<sub>1</sub>, x<sub>1</sub>, x<sub>0</sub>, x<sub>0</sub>]。vcvtps2pd指令把源XMM寄存器中的两个低位单精度值扩展成目标XMM寄存器中的两个双精度值。对前面vunpcklps指令的结果应用这条指令会得到值[dx<sub>0</sub>, dx<sub>0</sub>]。这里dx<sub>0</sub>是将x转换成双精度后的结果。即这两台哦指令的最终效果是将原始的%xmm0低位4字节中的单精度值转换成双精度值，再将其两个副本保存到%xmm0中。不是太明白GCC为什么会生成这些代码。对于将双精度转换为单精度，GCC会产生类似的代码：      
+    ```
+    Conversion from double to single precision
+    vmovddup %xmm0, %xmm0     Replicate first vector element
+    vcvtpd2psx %xmm0, %xmm0   Convert two vector elements to single
+    ```
+    假设这些指令开始宗前寄存器%xmm0保存着两个双精度值[x<sub>1</sub>, x<sub>0</sub>]。然后vmovddup指令将他设置为[x<sub>1</sub>, x<sub>0</sub>]。vcvtpd2psx指令把这两个值转换成单精度，再存放到该寄存器的低位一般中，并将高位一般设置为0，得到结果[0.0, 0.0, x<sub>0</sub>， x<sub>0</sub>]。同样，用这种方式把一种精度转换成另外一种精度。而不用下面的单条指令，没有明显直接的意义：`vcvtsd2ss %xmm0, %xmm0, %xmm0`。
