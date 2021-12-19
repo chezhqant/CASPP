@@ -87,7 +87,14 @@
     + 写回阶段，valE被写入寄存器rB        
     + 更新阶段，PC设置为valP        
     demo, subq:     
+
     |阶段|OPQ rA, rB|subq %rdx, %rbx|
     |-|-|-|
     |取值|icode:ifun &larr; M<sub>1</sub>[PC]<br>rA:rB &larr; M<sub>1</sub>[PC+1]<br>valP &larr; PC+2|icode:ifun &larr; M<sub>1</sub>[0x014]=6:1<br>rA:rB &larr; M<sub>1</sub>[0x015]=2:3<br>valP &larr; 0x014+2=0x016|
-    ||||
+    |译码|valA &larr; R[rA]<br>valB &larr; R[rB]|valA &larr; R[%rdx]=9<br>valB &larr; R[%rbx]=21|
+    |执行|valE &larr; valB OP valA<br>Set CC|valE &larr; 21-9=12<br>ZF &larr; 0, SF &larr; 0, OF &larr; 0|
+    |访存|||
+    |写回|R[rB] &larr valE|R[%rbx] &larr; valE=12|
+    |更新|PC &larr; valP|PC &larr; valP=0x016|
+
+9.  
