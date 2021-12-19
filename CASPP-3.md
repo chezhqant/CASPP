@@ -475,4 +475,21 @@
     vmovddup %xmm0, %xmm0     Replicate first vector element
     vcvtpd2psx %xmm0, %xmm0   Convert two vector elements to single
     ```
-    假设这些指令开始宗前寄存器%xmm0保存着两个双精度值[x<sub>1</sub>, x<sub>0</sub>]。然后vmovddup指令将他设置为[x<sub>1</sub>, x<sub>0</sub>]。vcvtpd2psx指令把这两个值转换成单精度，再存放到该寄存器的低位一般中，并将高位一般设置为0，得到结果[0.0, 0.0, x<sub>0</sub>， x<sub>0</sub>]。同样，用这种方式把一种精度转换成另外一种精度。而不用下面的单条指令，没有明显直接的意义：`vcvtsd2ss %xmm0, %xmm0, %xmm0`。
+    假设这些指令开始宗前寄存器%xmm0保存着两个双精度值[x<sub>1</sub>, x<sub>0</sub>]。然后vmovddup指令将他设置为[x<sub>1</sub>, x<sub>0</sub>]。vcvtpd2psx指令把这两个值转换成单精度，再存放到该寄存器的低位一般中，并将高位一般设置为0，得到结果[0.0, 0.0, x<sub>0</sub>， x<sub>0</sub>]。同样，用这种方式把一种精度转换成另外一种精度。而不用下面的单条指令，没有明显直接的意义：`vcvtsd2ss %xmm0, %xmm0, %xmm0`。        
+54. 在x86-64中，XMM急促请你用来向函数传递浮点参数，以及从函数返回浮点值，可以看到如下规则：     
+    + XMM寄存器%xmm0-%xmm7最多可以传递8个浮点参数。可以按照顺序使用这些寄存器。可以通过栈传递额外的浮点参数     
+    + 函数使用寄存器%xmm0来返回浮点数       
+    + 所有XMM寄存器都是调用者保存的。被调用者可以不用保存就覆盖这些寄存器中的任意一个       
+    当函数包含指针/整数和浮点数混合的参数时，指针和整数通过通用寄存器传递，而浮点数值通过XMM寄存器传递。也就是说，参数到寄存器的映射取决于它们的类型和排列的顺序。       
+55. 浮点数运算。以下每条指令有一个（S<sub>1</sub>）或者两个（S<sub>1</sub>, S<sub>2</sub>）源操作数，和一个目的操作数D。第一个源操作数S<sub>1</sub>可以时一个XMM寄存器或者与i个内存位置。第二个源操作数和目的操作数都必须是XMM寄存器。每个操作都有一条针对单精度的指令和一条针对双精度的指令。结果存放在目的寄存器中：      
+    |单精度|双精度|效果|描述|
+    |-|-|-|-|
+    |vaddss|vaddsd|D &larr; S<sub>2</sub>+S<sub>1</sub>|浮点数加|
+    |vsubss|vsubsd|D &larr; S<sub>2</sub>-S<sub>1</sub>|浮点数减|
+    |vmulss|vmulsd|D &larr; S<sub>2</sub>\*S<sub>1</sub>|浮点数乘|
+    |vdivss|vdivsd|D &larr; S<sub>2</sub>\/S<sub>1</sub>|浮点数除|
+    |vmaxss|vmaxsd|D &larr; max(S<sub>2</sub>, S<sub>1</sub>)|浮点数最大值|
+    |vminss|vminsd|D &larr; min(S<sub>2</sub>, S<sub>1</sub>)|浮点数最小值|
+    |sqrtss|sqrtsd|D &larr; \sqrt[2]{S<sub>1</sub>}|浮点数最小值|
+
+56. 
