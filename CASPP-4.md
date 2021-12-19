@@ -79,3 +79,15 @@
     |写回|R[rB] &larr; valE|R[rB] &larr; valE|R[rB] &larr; valE|
     |更新PC|PC &larr; valP|PC &larr; valP|PC &larr; valP|
 
+    整数操作指令的处理遵循上面的通用模式。        
+    + 在取值阶段，不需要常数字，所以valP就计算位PC+2。      
+    + 在译码阶段，需要读两个操作数      
+    + 在执行阶段，他们和功能指示符 ifunc 一起在提供给ALU，这样就能计算出来valE。这个计算使用表达式valB OP valA来表达的。这里的OP表示ifunc指定的操作，要注意两个参数的顺序      
+    + 访存阶段什么都不做      
+    + 写回阶段，valE被写入寄存器rB        
+    + 更新阶段，PC设置为valP        
+    demo, subq:     
+    |阶段|OPQ rA, rB|subq %rdx, %rbx|
+    |-|-|-|
+    |取值|icode:ifun &larr; M<sub>1</sub>[PC]<br>rA:rB &larr; M<sub>1</sub>[PC+1]<br>valP &larr; PC+2|icode:ifun &larr; M<sub>1</sub>[0x014]=6:1<br>rA:rB &larr; M<sub>1</sub>[0x015]=2:3<br>valP &larr; 0x014+2=0x016|
+    ||||
