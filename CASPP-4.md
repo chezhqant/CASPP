@@ -73,4 +73,9 @@
     |阶段|opq rA, rB|rrmovq rA, rB|irmovq V, rB|
     |-|-|-|-|
     |取值|icode:ifun &larr; M<sub>1</sub>[PC]<br>rA:rB &larr; M<sub>1</sub><br> valP &larr; PC + 2|icode:ifun &larr; M<sub>1</sub>[PC]<br>rA:rB &larr; M<sub>1</sub>[PC+1]<br>valP &larr; PC+2|icode:ifun &larr; M<sub>1</sub>[PC]<br>rA:rB &larr; M<sub>1</sub>[PC+1]<br>valC &larr; M<sub>8</sub>[PC+2]<br>valP &larr; PC+10|
+    |译码|valA &larr; R[rA]<br>valB &larr; R[rB]|valA &larr; R[rA]||
+    |执行|valE &larr; valB OP valA<br> Set CC|valE &larr; 0 + valA|valE &larr; 0+valC|
+    |访存||||
+    |写回|R[rB] &larr; valE|R[rB] &larr; valE|R[rB] &larr; valE|
+    |更新PC|PC &larr; valP|PC &larr; valP|PC &larr; valP|
 
